@@ -6,7 +6,8 @@ const { main } = require('./replace_yaml_value_and_commit');
     const yamlFilePath = core.getInput('yaml-file-path');
     const targetKey = core.getInput('target-key');
     const needPush = core.getInput('need-push');
-    main(yamlFilePath, targetKey, needPush);
+    const targetValue = core.getInput('target-value');
+    main(yamlFilePath, targetKey, targetValue, needPush);
   } catch (error) {
     core.setFailed(error.message);
   }
