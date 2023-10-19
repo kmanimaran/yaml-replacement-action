@@ -14,7 +14,7 @@ to
 <script src="production.min.js?ver=2"></script>
 ```
 
-The version number at the end of the URL is often managed in a YAML file. So, when you deploy your application, you need to update the version number from `1` to `2`. This action updates the version number to the current date formatted as `YYYYMMDDhhmm`.
+The version number at the end of the URL is often managed in a YAML file. So, when you deploy your application, you need to update the version number from `1` to `2`. 
 
 
 ## Inputs
@@ -26,6 +26,10 @@ The version number at the end of the URL is often managed in a YAML file. So, wh
 ### `target-key`
 
 **Required** The key of the value that needs to be replaced in the YAML file.
+
+### `target-value`
+
+**Required** The value for the key that needs to be replaced in the YAML file.
 
 ### `need-push`
 
@@ -49,6 +53,7 @@ uses: iisyos/yaml-replacement-action@v1
 with:
   yaml-file-path: 'setting.yaml'
   target-key: 'step.revision'
+  target-value: 'value'
   need-push: true
 ```
 
