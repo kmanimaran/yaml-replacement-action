@@ -5,8 +5,12 @@ inputs:
     description: 'Path to the YAML file'
     required: true
   target-key:
-    description: 'Key to increment in the YAML file'
+    description: 'Key to replace in the YAML file'
     required: true
+  target-value:
+    description: 'Value to replace in the YAML file'
+    required: true
+    default: ''    
   need-push:
     description: 'Need commit & push YAML replacement'
     required: true
