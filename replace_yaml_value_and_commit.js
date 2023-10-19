@@ -2,7 +2,7 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const git = require('simple-git');
 
-const main = async (yamlFilePath, targetKey, needPush) => {
+const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
     const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
         throw new Error(`Error reading YAML file: ${error.message}`);
     });
@@ -10,7 +10,7 @@ const main = async (yamlFilePath, targetKey, needPush) => {
 
     let result;
     try {
-        result = replaceYaml(yamlContent, targetKey, getFormattedCurrentDateTime());
+        result = replaceYaml(yamlContent, targetKey, targetValue);
     } catch (error) {
         throw new Error(`Error replacing YAML value: ${error.message}`);
     }
@@ -57,16 +57,6 @@ const replaceYaml = (obj, key, targetValue) => {
         old: current[lastKey],
         new: targetValue
     };
-}
-
-const getFormattedCurrentDateTime = () => {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hour = ('0' + date.getHours()).slice(-2);
-    const minute = ('0' + date.getMinutes()).slice(-2);
-    return `${year}${month}${day}${hour}${minute}`;
 }
 
 module.exports = { main };
