@@ -11,7 +11,7 @@ const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
     let result;
     try {
         console.log("Replacing with value: " + targetValue);
-        result = replaceYaml(yamlContent, targetKey, targetValue);
+        result = replaceYamlContents(yamlContent, targetKey, targetValue);
     } catch (error) {
         throw new Error(`Error replacing YAML value: ${error.message}`);
     }
@@ -41,7 +41,7 @@ const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
     });
 }
 
-const replaceYaml = (obj, key, targetValue) => {
+const replaceYamlContents = (obj, key, targetValue) => {
     const keys = key.split('.');
     const lastKey = keys.pop();
 
