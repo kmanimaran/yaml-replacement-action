@@ -10,11 +10,14 @@ const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
 
     let result;
     try {
+        console.log("Replacing with value: " + targetValue);
         result = replaceYaml(yamlContent, targetKey, targetValue);
     } catch (error) {
         throw new Error(`Error replacing YAML value: ${error.message}`);
     }
     const updatedYaml = yaml.dump(yamlContent);
+    console.log("Updated YAML");
+    console.log(updatedYaml);
     await fs.promises.writeFile(yamlFilePath, updatedYaml, 'utf8').catch((error) => {
         throw new Error(`Error writing updated YAML file: ${error.message}`);
     });
