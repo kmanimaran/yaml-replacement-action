@@ -1,5 +1,5 @@
 const core = require('@actions/core');
-const { main } = require('./replace_yaml_value_and_commit');
+const { main } = require('./replace_value_and_commit');
 
 (() => {
   try {
