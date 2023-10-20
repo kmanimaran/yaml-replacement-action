@@ -26,6 +26,7 @@ const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
     const gitRepo = git();
     await gitRepo.addConfig('user.name', 'github-actions[bot]');
     await gitRepo.addConfig('user.email', 'github-actions[bot]@users.noreply.github.com');
+    await gitRepo.addConfig('push.autoSetupRemote', true);
     await gitRepo.add(yamlFilePath).catch((error) => {
         throw new Error(`Error adding file to git: ${error.message}`);
     });
