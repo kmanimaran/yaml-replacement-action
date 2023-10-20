@@ -25,7 +25,7 @@ You need to supply your Personal Access Token (PAT) which allows repository acce
 
 ```yml
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v8
         with:
           fetch-depth: 0 
           token: ${{ secrets.MY_PERSONAL_ACCESS_TOKEN }}
@@ -34,7 +34,7 @@ You need to supply your Personal Access Token (PAT) which allows repository acce
 ## Example usage
 
 ```yaml
-uses: kmanimaran/yaml-replacement-action@v1
+uses: kmanimaran/yaml-replacement-action@v8
 with:
   yaml-file-path: 'setting.yaml'
   target-key: 'step.revision'
