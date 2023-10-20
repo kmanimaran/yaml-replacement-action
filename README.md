@@ -1,21 +1,6 @@
 # YAML Replacement action
 
-This action replace specific value in YAML file.
-
-## Motivation & Description
-
-When you want to update a file cached in the browser, you change the URL of the file, like this:
-
-```js
-<script src="production.min.js?ver=1"></script>
-```
-to
-```js
-<script src="production.min.js?ver=2"></script>
-```
-
-The version number at the end of the URL is often managed in a YAML file. So, when you deploy your application, you need to update the version number from `1` to `2`. 
-
+This action replace specific value in YAML file. Forked and modified from iisyos/yaml-replacement-action
 
 ## Inputs
 
@@ -49,7 +34,7 @@ You need to supply your Personal Access Token (PAT) which allows repository acce
 ## Example usage
 
 ```yaml
-uses: iisyos/yaml-replacement-action@v1
+uses: kmanimaran/yaml-replacement-action@v1
 with:
   yaml-file-path: 'setting.yaml'
   target-key: 'step.revision'
