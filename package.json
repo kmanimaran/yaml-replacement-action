@@ -1,6 +1,6 @@
 {
   "name": "yaml-replacement-action",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This action replace specific value in YAML file.",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iisyos/yaml-replacement-action.git"
+    "url": "git+https://github.com/karthikman/yaml-replacement-action.git"
   },
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iisyos/yaml-replacement-action/issues"
+    "url": "https://github.com/karthikman/yaml-replacement-action/issues"
   },
-  "homepage": "https://github.com/iisyos/yaml-replacement-action#readme",
+  "homepage": "https://github.com/karthikman/yaml-replacement-action#readme",
   "dependencies": {
     "@actions/core": "^1.10.0",
     "@actions/github": "^5.1.1",
