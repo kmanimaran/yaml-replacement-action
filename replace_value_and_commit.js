@@ -2,7 +2,17 @@ const fs = require('fs');
 const yaml = require('js-yaml');
 const git = require('simple-git');
 
-const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
+const main = async (folders, targetKey, targetValue, needPush) => {
+
+    console.log("Folder list");
+    console.log(folders);
+
+    folders.forEach( (element) => {
+     console.log(element);
+    });
+
+    const yamlFilePath = "secrets/Chart.yaml";
+    
     const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
         throw new Error(`Error reading YAML file: ${error.message}`);
     });
