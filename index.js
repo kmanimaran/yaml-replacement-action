@@ -3,11 +3,11 @@ const { main } = require('./replace_value_and_commit');
 
 (() => {
   try {
-    const yamlFilePath = core.getInput('yaml-file-path');
+    const folders = core.getInput('folders');
     const targetKey = core.getInput('target-key');
     const needPush = core.getInput('need-push');
     const targetValue = core.getInput('target-value');
-    main(yamlFilePath, targetKey, targetValue, needPush);
+    main(folders, targetKey, targetValue, needPush);
   } catch (error) {
     core.setFailed(error.message);
   }
