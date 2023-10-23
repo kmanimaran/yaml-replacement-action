@@ -1,8 +1,8 @@
 name: 'YAML generic value replacement'
 description: 'Replace specific value in YAML file'
 inputs:
-  yaml-file-path:
-    description: 'Path to the YAML file'
+  folders:
+    description: 'List of folders'
     required: true
   target-key:
     description: 'Key to replace in the YAML file'
