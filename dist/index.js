@@ -12386,7 +12386,7 @@ const main = async (folders, targetKey, targetValue, needPush) => {
     await gitRepo.addConfig('user.email', 'github-actions[bot]@users.noreply.github.com');
     await gitRepo.addConfig('push.autoSetupRemote', true);
 
-    await gitRepo.commit(`Replace YAML ${result.old} to ${result.new} [ci skip]`).catch((error) => {
+    await gitRepo.commit(`Replace Helm version to ${targetValue} [ci skip]`).catch((error) => {
         throw new Error(`Error committing changes: ${error.message}`);
     });
     await gitRepo.push().catch((error) => {
