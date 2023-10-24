@@ -12348,7 +12348,7 @@ const main = async (folders, targetKey, targetValue, needPush) => {
      console.log(element);
     };
 
-    const yamlFilePath = "secrets/Chart.yaml";
+    let yamlFilePath = "";
     const gitRepo = git();
 
     for(const element of folders) {
