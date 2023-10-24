@@ -12353,7 +12353,7 @@ const main = async (folders, targetKey, targetValue, needPush) => {
 
     for(const element of folders) {
 
-        yamlFilePath = element + "Chart.yaml";
+        yamlFilePath = element + "/Chart.yaml";
         const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
             throw new Error(`Error reading YAML file: ${error.message}`);
         });
