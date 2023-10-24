@@ -1,12 +1,12 @@
 # YAML Replacement action
 
-This action replace specific value in YAML file. Forked and modified from iisyos/yaml-replacement-action
+This action replaces specific value in all Helm Chart YAML files in an array of folders. 
 
 ## Inputs
 
-### `yaml-file-path`
+### `folders`
 
-**Required** The path to your YAML file that needs the replacement.
+**Required** Array of chart folders.
 
 ### `target-key`
 
