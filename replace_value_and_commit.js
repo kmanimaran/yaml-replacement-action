@@ -12,37 +12,43 @@ const main = async (folders, targetKey, targetValue, needPush) => {
     });
 
     const yamlFilePath = "secrets/Chart.yaml";
-    
-    const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
-        throw new Error(`Error reading YAML file: ${error.message}`);
-    });
-    const yamlContent = yaml.load(text);
+    const gitRepo = git();
 
-    let result;
-    try {
-        console.log("Replacing with value: " + targetValue);
-        result = replaceYamlContents(yamlContent, targetKey, targetValue);
-    } catch (error) {
-        throw new Error(`Error replacing YAML value: ${error.message}`);
-    }
-    const updatedYaml = yaml.dump(yamlContent);
-    console.log("Updated YAML");
-    console.log(updatedYaml);
-    await fs.promises.writeFile(yamlFilePath, updatedYaml, 'utf8').catch((error) => {
-        throw new Error(`Error writing updated YAML file: ${error.message}`);
+    folders.forEach( (element) => {
+
+        yamlFilePath = element + "Chart.yaml";
+        const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
+            throw new Error(`Error reading YAML file: ${error.message}`);
+        });
+        let yamlContent = yaml.load(text);
+    
+        let result;
+        try {
+            console.log("Replacing with value: " + targetValue + " for " + yamlFilePath);
+            result = replaceYamlContents(yamlContent, targetKey, targetValue);
+        } catch (error) {
+            throw new Error(`Error replacing YAML value: ${error.message}`);
+        }
+        let updatedYaml = yaml.dump(yamlContent);
+        console.log("Updated YAML");
+        console.log(updatedYaml);
+        await fs.promises.writeFile(yamlFilePath, updatedYaml, 'utf8').catch((error) => {
+            throw new Error(`Error writing updated YAML file: ${error.message}`);
+        });
+        await gitRepo.add(yamlFilePath).catch((error) => {
+            throw new Error(`Error adding file to git: ${error.message}`);
+        });
     });
+
     console.log('YAML value replacement successfully.');
     if (needPush === 'false') {
         return;
     }
     
-    const gitRepo = git();
     await gitRepo.addConfig('user.name', 'github-actions[bot]');
     await gitRepo.addConfig('user.email', 'github-actions[bot]@users.noreply.github.com');
     await gitRepo.addConfig('push.autoSetupRemote', true);
-    await gitRepo.add(yamlFilePath).catch((error) => {
-        throw new Error(`Error adding file to git: ${error.message}`);
-    });
+
     await gitRepo.commit(`Replace YAML ${result.old} to ${result.new} [ci skip]`).catch((error) => {
         throw new Error(`Error committing changes: ${error.message}`);
     });
