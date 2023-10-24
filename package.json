@@ -1,6 +1,6 @@
 {
   "name": "yaml-replacement-action",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "This action replace specific value in YAML file.",
   "main": "index.js",
   "scripts": {
