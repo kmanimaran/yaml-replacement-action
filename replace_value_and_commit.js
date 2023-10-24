@@ -7,9 +7,9 @@ const main = async (folders, targetKey, targetValue, needPush) => {
     console.log("Folder list");
     console.log(folders);
 
-    folders.forEach( (element) => {
+    for(const element of folders) {
      console.log(element);
-    });
+    };
 
     const yamlFilePath = "secrets/Chart.yaml";
     const gitRepo = git();
