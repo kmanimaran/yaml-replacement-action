@@ -12348,10 +12348,19 @@ const main = async (folders, targetKey, targetValue, needPush) => {
      console.log(element);
     };
 
+    let folderslist = folders.toString();
+    let foldersObj = JSON.parse(folderslist);
+
+    console.log("Printing string");
+    console.log(folderslist);
+
+    console.log("Printing object");
+    console.log(foldersObj);
+
     let yamlFilePath = "";
     const gitRepo = git();
 
-    for(const element of folders) {
+    for(const element of foldersObj) {
 
         yamlFilePath = element + "/Chart.yaml";
         const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
