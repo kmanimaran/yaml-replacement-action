@@ -4,20 +4,10 @@ const git = require('simple-git');
 
 const main = async (folders, targetKey, targetValue, needPush) => {
 
-    console.log("Folder list");
-    console.log(folders);
-
-    for(const element of folders) {
-     console.log(element);
-    };
-
     let folderslist = folders.toString();
     let foldersObj = JSON.parse(folderslist);
 
-    console.log("Printing string");
-    console.log(folderslist);
-
-    console.log("Printing object");
+    console.log("Folder list");
     console.log(foldersObj);
 
     let yamlFilePath = "";
