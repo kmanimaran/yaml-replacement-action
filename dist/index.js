@@ -12339,37 +12339,53 @@ const fs = __nccwpck_require__(7147);
 const yaml = __nccwpck_require__(9818);
 const git = __nccwpck_require__(1478);
 
-const main = async (yamlFilePath, targetKey, targetValue, needPush) => {
-    const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
-        throw new Error(`Error reading YAML file: ${error.message}`);
-    });
-    const yamlContent = yaml.load(text);
+const main = async (folders, targetKey, targetValue, needPush) => {
 
-    let result;
-    try {
-        console.log("Replacing with value: " + targetValue);
-        result = replaceYamlContents(yamlContent, targetKey, targetValue);
-    } catch (error) {
-        throw new Error(`Error replacing YAML value: ${error.message}`);
-    }
-    const updatedYaml = yaml.dump(yamlContent);
-    console.log("Updated YAML");
-    console.log(updatedYaml);
-    await fs.promises.writeFile(yamlFilePath, updatedYaml, 'utf8').catch((error) => {
-        throw new Error(`Error writing updated YAML file: ${error.message}`);
+    console.log("Folder list");
+    console.log(folders);
+
+    folders.forEach( (element) => {
+     console.log(element);
     });
+
+    const yamlFilePath = "secrets/Chart.yaml";
+    const gitRepo = git();
+
+    for(const element of folders) {
+
+        yamlFilePath = element + "Chart.yaml";
+        const text = await fs.promises.readFile(yamlFilePath, 'utf8').catch((error) => {
+            throw new Error(`Error reading YAML file: ${error.message}`);
+        });
+        let yamlContent = yaml.load(text);
+    
+        let result;
+        try {
+            console.log("Replacing with value: " + targetValue + " for " + yamlFilePath);
+            result = replaceYamlContents(yamlContent, targetKey, targetValue);
+        } catch (error) {
+            throw new Error(`Error replacing YAML value: ${error.message}`);
+        }
+        let updatedYaml = yaml.dump(yamlContent);
+        console.log("Updated YAML");
+        console.log(updatedYaml);
+        await fs.promises.writeFile(yamlFilePath, updatedYaml, 'utf8').catch((error) => {
+            throw new Error(`Error writing updated YAML file: ${error.message}`);
+        });
+        await gitRepo.add(yamlFilePath).catch((error) => {
+            throw new Error(`Error adding file to git: ${error.message}`);
+        });
+    };
+
     console.log('YAML value replacement successfully.');
     if (needPush === 'false') {
         return;
     }
     
-    const gitRepo = git();
     await gitRepo.addConfig('user.name', 'github-actions[bot]');
     await gitRepo.addConfig('user.email', 'github-actions[bot]@users.noreply.github.com');
     await gitRepo.addConfig('push.autoSetupRemote', true);
-    await gitRepo.add(yamlFilePath).catch((error) => {
-        throw new Error(`Error adding file to git: ${error.message}`);
-    });
+
     await gitRepo.commit(`Replace YAML ${result.old} to ${result.new} [ci skip]`).catch((error) => {
         throw new Error(`Error committing changes: ${error.message}`);
     });
@@ -12555,11 +12571,11 @@ const { main } = __nccwpck_require__(8804);
 
 (() => {
   try {
-    const yamlFilePath = core.getInput('yaml-file-path');
+    const folders = core.getInput('folders');
     const targetKey = core.getInput('target-key');
     const needPush = core.getInput('need-push');
     const targetValue = core.getInput('target-value');
-    main(yamlFilePath, targetKey, targetValue, needPush);
+    main(folders, targetKey, targetValue, needPush);
   } catch (error) {
     core.setFailed(error.message);
   }
